@@ -1,32 +1,20 @@
 import { Lucia } from "lucia";
 import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
 import { db } from "@/app/db/drizzle";
-import { session, user } from "@/app/db/schema";
+import { cookies } from "next/headers";
+import { eq } from "drizzle-orm";
+import { user, session } from "@/app/db/schema";
 
 const adapter = new DrizzlePostgreSQLAdapter(db, session, user);
 
 export const lucia = new Lucia(adapter, {
   sessionCookie: {
     expires: false,
+    name: "cookie-auth",
     attributes: {
       secure: process.env.NODE_ENV === "production",
     },
   },
-  getUserAttributes: (attributes) => {
-    return {
-      // attributes has the type of DatabaseUserAttributes
-      username: attributes.username,
-    };
-  },
 });
 
-declare module "lucia" {
-  interface Register {
-    Lucia: typeof lucia;
-    DatabaseUserAttributes: DatabaseUserAttributes;
-  }
-}
 
-interface DatabaseUserAttributes {
-  username: string;
-}

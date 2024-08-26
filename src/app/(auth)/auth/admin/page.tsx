@@ -3,8 +3,14 @@ import { LoginForm } from "./login";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RegisterForm } from "./regsiter";
 import { TabsContent } from "@radix-ui/react-tabs";
+import { getUser } from "@/lib/validate";
+import { redirect } from "next/navigation";
 
-export default function Login() {
+export default async function Login() {
+  const user = await getUser();
+  if (user) {
+    redirect("/edukasi-hukum");
+  }
   return (
     <div className="relative flex w-full h-screen bg-background">
       <div className="max-w-3xl absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">

@@ -21,13 +21,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { loginAction } from "./auth.action";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
-const loginSchema = z.object({
+export const loginSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8, { message: "Password must be 8 character" }),
 });
 
 export function LoginForm() {
+  const router = useRouter();
   // 1. Define your form.
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -38,7 +42,14 @@ export function LoginForm() {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof loginSchema>) {
+  async function onSubmit(values: z.infer<typeof loginSchema>) {
+    const result = await loginAction(values);
+    if (result.success) {
+      toast.success("Login successful");
+      router.push("/");
+    } else {
+      toast.error(result.error);
+    }
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values);
