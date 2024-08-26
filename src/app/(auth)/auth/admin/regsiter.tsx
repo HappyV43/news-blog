@@ -21,7 +21,7 @@ import {
   CardDescription,
   CardContent,
 } from "@/components/ui/card";
-import { register } from "./auth.action";
+import { registerAction } from "./auth.action";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -52,7 +52,7 @@ export function RegisterForm() {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof registerSchema>) {
-    const res = await register(values);
+    const res = await registerAction(values);
     if (res.success) {
       toast.success("Account created successfully");
       router.push("/");
