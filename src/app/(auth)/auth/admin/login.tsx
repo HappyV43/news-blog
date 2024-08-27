@@ -3,7 +3,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -50,9 +49,6 @@ export function LoginForm() {
     } else {
       toast.error(result.error);
     }
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
   }
 
   return (

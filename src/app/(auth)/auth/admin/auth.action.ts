@@ -11,6 +11,7 @@ import { generateIdFromEntropySize } from "lucia";
 import { cookies } from "next/headers";
 import { loginSchema } from "./login";
 import { redirect } from "next/navigation";
+import { createPost } from "@/lib/postTypes";
 
 export const registerAction = async (value: z.infer<typeof registerSchema>) => {
   try {
@@ -117,8 +118,10 @@ export const logOutSession = async () => {
       sessionCookie.value,
       sessionCookie.attributes
     );
-    return redirect("/auth/admin");
+    return redirect(process.env.ADMIN_URL!);
   } catch (error) {
     console.error(error);
   }
 };
+
+

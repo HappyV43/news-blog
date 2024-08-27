@@ -3,7 +3,6 @@ import { eq } from "drizzle-orm";
 import { cookies } from "next/headers";
 import { lucia } from "./lucia";
 import { user as userTable } from "@/app/db/schema";
-import { redirect } from "next/navigation";
 
 export const getUser = async () => {
   const sessionId = cookies().get(lucia.sessionCookieName)?.value || null;
@@ -32,10 +31,7 @@ export const getUser = async () => {
   }
   if (!user) return null;
   const dbUser = await db
-    .select({
-      name: userTable.name,
-      email: userTable.email,
-    })
+    .select()
     .from(userTable)
     .where(eq(userTable.id, user.id))
     .limit(1)

@@ -25,7 +25,7 @@ export const session = pgTable("session", {
 
 // Posts Table
 export const post = pgTable("post", {
-  id: serial("id").primaryKey(),
+  id: text("id").primaryKey(),
   userId: text("user_id")
     .notNull()
     .references(() => user.id),
