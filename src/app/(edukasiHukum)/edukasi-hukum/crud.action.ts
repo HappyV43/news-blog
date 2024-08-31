@@ -12,9 +12,12 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export const makePost = async (prevState: unknown, formData: FormData) => {
+  // check cookie dan ambil token dari user
   const sessionId = cookies().get(lucia.sessionCookieName)?.value || null;
   if (!sessionId) return null;
   const { user } = await lucia.validateSession(sessionId);
+
+  //looping zod
   const validateFields = createPost.safeParse(
     Object.fromEntries(formData.entries())
   );
@@ -29,11 +32,11 @@ export const makePost = async (prevState: unknown, formData: FormData) => {
     access: "public",
     multipart: true,
   });
-  const checkPost = await db
+
+  const [checkPost] = await db
     .select()
     .from(post)
-    .where(and(eq(post.title, title), eq(post.content, content)))
-    .then((res) => res[0]);
+    .where(and(eq(post.title, title), eq(post.content, content)));
 
   if (checkPost) {
     return {
@@ -67,4 +70,14 @@ export const getAllPost = async () => {
   } catch (error) {
     throw new Error("Error fetching data");
   }
+};
+
+export const getPostById = async (id: string) => {
+  const [specificPost] = await db
+    .select()
+    .from(post)
+    .where(eq(post.id, id))
+    .limit(1);
+
+  return specificPost;
 };

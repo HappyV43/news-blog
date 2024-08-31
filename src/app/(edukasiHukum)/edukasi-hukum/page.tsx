@@ -4,12 +4,11 @@ import { redirect } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import CreatePost from "./CreatePost";
-import { getAllPost } from "./crud.action";
-import Image from "next/image";
+import AllPost from "./AllPost";
 
 export default async function EdukasiHukum() {
   const user = await getUser();
-  const allPost = await getAllPost();
+
   if (!user) {
     redirect(process.env.ADMIN_URL!);
   }
@@ -21,19 +20,7 @@ export default async function EdukasiHukum() {
         <Button>Sign out</Button>
       </form>
       <CreatePost />
-      {allPost.map((item) => (
-        <div key={item.id}>
-          <h1>{item.title}</h1>
-          <p>{item.content}</p>
-          <Image
-            src={item.gambar}
-            alt={item.title}
-            height={420}
-            width={740}
-            className="rounded-t-md object-cover"
-          />
-        </div>
-      ))}
+      <AllPost />
     </main>
   );
 }
