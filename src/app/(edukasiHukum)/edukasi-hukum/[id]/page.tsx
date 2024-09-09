@@ -2,6 +2,8 @@ import React from "react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getPostById } from "../crud.action";
+import UpdateForm from "@/components/UpdateForm";
+import { DeleteButton } from "@/components/DeleteButton";
 
 export default async function EdukasiHukumPost({
   params,
@@ -12,7 +14,15 @@ export default async function EdukasiHukumPost({
   const { id } = params;
 
   // getting post by id
-  const specificPost = await getPostById(id);
+  const getPost = async () => {
+    const specificPost = await getPostById(id);
+    if (!specificPost) {
+      notFound();
+    }
+    return specificPost;
+  };
+
+  const specificPost = await getPost();
 
   // checking post kalo post ada atau engga
   if (!specificPost) {
@@ -21,6 +31,8 @@ export default async function EdukasiHukumPost({
 
   return (
     <main key={specificPost.id}>
+      <UpdateForm data={specificPost} />
+      <DeleteButton id={specificPost.id} />
       <h1>{specificPost.title}</h1>
       <p>{specificPost.content}</p>
       <Image

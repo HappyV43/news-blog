@@ -1,8 +1,8 @@
 "use server";
-import { createPost } from "@/lib/postTypes";
+import { createPostType, updatePostType } from "@/lib/postTypes";
 
 import { generateIdFromEntropySize } from "lucia";
-import { put } from "@vercel/blob";
+import { del, put } from "@vercel/blob";
 import { db } from "@/app/db/drizzle";
 import { post } from "@/app/db/schema";
 import { cookies } from "next/headers";
@@ -18,10 +18,11 @@ export const makePost = async (prevState: unknown, formData: FormData) => {
   const { user } = await lucia.validateSession(sessionId);
 
   //looping zod
-  const validateFields = createPost.safeParse(
+  const validateFields = createPostType.safeParse(
     Object.fromEntries(formData.entries())
   );
 
+  // memberikan objek dengan error untuk setiap field.
   if (!validateFields.success) {
     return {
       error: validateFields.error.flatten().fieldErrors,
@@ -80,4 +81,66 @@ export const getPostById = async (id: string) => {
     .limit(1);
 
   return specificPost;
+};
+
+export const updateNewsPost = async (
+  id: string,
+  prevState: unknown,
+  formData: FormData
+) => {
+  const validatedFields = updatePostType.safeParse(
+    Object.fromEntries(formData.entries())
+  );
+
+  if (!validatedFields.success) {
+    return {
+      error: validatedFields.error.flatten().fieldErrors,
+    };
+  }
+
+  const data = await getPostById(id);
+  if (!data) return { message: "No Data Found" };
+
+  const { title, content, image } = validatedFields.data;
+  let imagePath;
+  if (!image || image.size <= 0) {
+    imagePath = data.gambar;
+  } else {
+    await del(data.gambar);
+    const { url } = await put(image.name, image, {
+      access: "public",
+      multipart: true,
+    });
+    imagePath = url;
+  }
+
+  try {
+    await db
+      .update(post)
+      .set({
+        title: title,
+        content: content,
+        gambar: imagePath,
+      })
+      .where(eq(post.id, id));
+  } catch (error) {
+    return { message: "Failed to update data" };
+  }
+
+  revalidatePath("/edukasi-hukum");
+  revalidatePath(`/edukasi-hukum/${id}`);
+  redirect("/edukasi-hukum");
+};
+
+export const deleteNewsPost = async (id: string) => {
+  const data = await getPostById(id);
+  if (!data) return { message: "No data found" };
+  await del(data.gambar);
+  try {
+    await db.delete(post).where(eq(post.id, id));
+  } catch (error) {
+    throw new Error("Error deleting data");
+  }
+  revalidatePath("/edukasi-hukum");
+  redirect("/edukasi-hukum");
 };

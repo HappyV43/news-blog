@@ -11,7 +11,6 @@ import { generateIdFromEntropySize } from "lucia";
 import { cookies } from "next/headers";
 import { loginSchema } from "./login";
 import { redirect } from "next/navigation";
-import { createPost } from "@/lib/postTypes";
 
 export const registerAction = async (value: z.infer<typeof registerSchema>) => {
   try {
@@ -57,31 +56,22 @@ export const registerAction = async (value: z.infer<typeof registerSchema>) => {
 export const loginAction = async (value: z.infer<typeof loginSchema>) => {
   try {
     // check user
-    const existingUsers = await db
+    const [existingUsers] = await db
       .select()
       .from(user)
       .where(eq(user.email, value.email));
 
     //   kalo gak ada user atau gak ada password
-    if (!existingUsers || existingUsers.length === 0) {
+    if (!existingUsers) {
       return {
         success: false,
         error: "gak ada user",
       };
     }
 
-    const existingUser = existingUsers[0];
-
-    if (!existingUser) {
-      return {
-        success: false,
-        error: "User not found",
-      };
-    }
-
     // check password
     const passwordMatch = await new Argon2id().verify(
-      existingUser.passwordHash,
+      existingUsers.passwordHash,
       value.password
     );
 
@@ -91,7 +81,7 @@ export const loginAction = async (value: z.infer<typeof loginSchema>) => {
         error: "Salah password",
       };
 
-    const session = await lucia.createSession(existingUser.id, {});
+    const session = await lucia.createSession(existingUsers.id, {});
     const sessionCookie = await lucia.createSessionCookie(session.id);
     cookies().set(
       sessionCookie.name,
@@ -123,5 +113,3 @@ export const logOutSession = async () => {
     console.error(error);
   }
 };
-
-
