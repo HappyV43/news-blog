@@ -1,113 +1,139 @@
+import { metamorphous } from "@/lib/font";
 import Image from "next/image";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <div className="flex flex-col text-white w-full min-h-screen overflow-hidden">
+      {/* Section 1 */}
+      <section className="flex flex-col relative py-10 px-6 md:py-12 md:px-16 gap-10">
+        <header className="flex flex-col md:flex-row items-center gap-4 md:gap-6 z-10">
+          {/* Gambar logo yang responsif */}
+          <Image
+            src="next.svg"
+            width={180}
+            height={150}
+            alt="logo"
+            className="w-[120px] h-auto md:w-[180px]"
+          />
+          <div className="text-center md:text-left">
+            {/* Judul responsif yang berubah ukuran sesuai dengan ukuran layar */}
+            <h1
+              className={`${metamorphous.className} text-[32px] md:text-[64px]`}
+            >
+              KamiSedia
+            </h1>
+            <h2 className="text-[24px] md:text-[40px]">
+              Website Hukum Terlengkap dan Terpercaya
+            </h2>
+          </div>
+        </header>
+
+        <div className="flex z-10 flex-col md:flex-row justify-between gap-6 md:gap-16">
+          {/* Text responsif dengan lebar 50% pada layar besar */}
+          <p className="md:w-1/2">
+            Tetap up to date dengan berita hukum terkini tanpa takut dengan
+            berita palsu dengan KamiSedia
+          </p>
+          {/* Gambar responsif dengan lebar penuh pada perangkat kecil dan ukuran maksimal di perangkat besar */}
+          <Image
+            src="/reading_newspaper.jpg"
+            width={600}
+            height={0}
+            alt="reading newspaper"
+            className="rounded-md w-full max-w-[600px] h-auto"
+          />
         </div>
-      </div>
 
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
+        {/* Gambar latar belakang dengan objek yang menutupi seluruh area */}
         <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+          src="/law.jpg"
+          alt="background"
+          fill={true}
+          className="object-cover absolute top-0 left-0 right-0 bottom-0 w-full h-full -z-10"
         />
-      </div>
+      </section>
 
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
+      {/* Section 2 */}
+      <section className="flex flex-col md:flex-row bg-[#FF2E2E] py-10 px-6 md:py-12 md:px-16 justify-between gap-6 md:gap-0">
+        <Image
+          src="/gavel.jpg"
+          height={0}
+          width={550}
+          alt="home-image"
+          className="rounded-md w-full max-w-[550px] h-auto"
+        />
+        <div className="self-center w-full md:w-1/2">
+          <h1 className="font-bold text-2xl md:text-4xl mb-4">
+            Berita Faktual yang Terpercaya
+          </h1>
+          <p className="text-sm md:text-base">
+            KamiSedia menyajikan berita hukum terkini yang akurat dan
+            terpercaya. Dengan tim redaksi berpengalaman, kami memastikan setiap
+            informasi yang disajikan telah melalui proses verifikasi ketat.
           </p>
-        </a>
+        </div>
+      </section>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
+      {/* Section 3 */}
+      <section className="flex flex-col-reverse md:flex-row py-10 px-6 md:py-12 md:px-16 text-black justify-between gap-6 md:gap-0">
+        <div className="w-full md:w-1/2 self-center">
+          <h1 className="font-bold text-2xl md:text-4xl mb-4">
+            Selalu Update dengan Informasi Hukum Terkini
+          </h1>
+          <p className="text-sm md:text-base">
+            Dengan pembaruan rutin dan analisis mendalam, kami memastikan Anda
+            mendapatkan informasi terbaru tentang perubahan hukum, peraturan
+            baru, dan kasus-kasus penting.
           </p>
-        </a>
+        </div>
+        <Image
+          src="/reading-news-2.jpg"
+          height={0}
+          width={550}
+          alt="lawyer-image"
+          className="rounded-md w-full max-w-[550px] h-auto"
+        />
+      </section>
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
+      {/* Section 4 */}
+      <section className="flex flex-col md:flex-row bg-[#FF2E2E] py-10 px-6 md:py-12 md:px-16 gap-6 md:gap-0">
+        <Image
+          src="/lawyer.jpg"
+          height={0}
+          width={675}
+          alt="home-image"
+          className="rounded-md w-full max-w-[670px] h-auto mb-4 md:mb-0 md:mr-4"
+        />
+        <div className="md:w-1/2 self-center">
+          <h1 className="font-bold text-2xl md:text-4xl mb-2">
+            Meningkatkan Literasi Hukum dan Memberikan Konsultasi Praktis
+          </h1>
+          <p className="text-sm md:text-base">
+            KamiSedia bertujuan untuk meningkatkan literasi hukum masyarakat dan
+            menyediakan layanan konsultasi hukum online yang praktis.
           </p>
-        </a>
+        </div>
+      </section>
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
+      {/* Section 5 */}
+      <section className="flex flex-col-reverse md:flex-row text-black py-10 px-6 md:py-12 md:px-16 gap-6 md:gap-0">
+        <div className="w-full md:w-1/2 self-center">
+          <h1 className="font-bold text-2xl md:text-4xl mb-2">
+            Memahami Hukum dengan Mudah dan Praktis
+          </h1>
+          <p className="text-sm md:text-base">
+            KamiSedia menyajikan berita hukum terkini yang akurat dan
+            terpercaya.
           </p>
-        </a>
-      </div>
-    </main>
+        </div>
+        <Image
+          src="/gavel-cuff.jpg"
+          height={0}
+          width={675}
+          alt="home-image"
+          className="rounded-md w-full max-w-[670px] h-auto"
+        />
+      </section>
+    </div>
   );
 }

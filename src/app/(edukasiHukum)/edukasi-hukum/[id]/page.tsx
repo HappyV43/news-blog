@@ -30,7 +30,7 @@ export default async function EdukasiHukumPost({
   }
 
   return (
-    <main key={specificPost.id}>
+    <main>
       <UpdateForm data={specificPost} />
       <DeleteButton id={specificPost.id} />
       <h1>{specificPost.title}</h1>

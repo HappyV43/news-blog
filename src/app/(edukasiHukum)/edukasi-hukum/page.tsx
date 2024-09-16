@@ -20,7 +20,7 @@ export default async function EdukasiHukum() {
         <Button>Sign out</Button>
       </form>
       <CreatePost />
-      <AllPost />
+      <AllPost  />
     </main>
   );
 }

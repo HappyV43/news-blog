@@ -4,14 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default async function AllPost() {
-  
   // ambil semua post dan rendering semua dimain page
   const allPost = await getAllPost();
   return (
     <main>
       {allPost.map((item) => (
-        <Link href={`/edukasi-hukum/${item.id}`}>
-          <div key={item.id} className="hover:shadow-2xl">
+        <Link href={`/edukasi-hukum/${item.id}`} key={item.id}>
+          <div className="hover:shadow-2xl">
             <h1>{item.title}</h1>
             <p>{item.content}</p>
             <Image

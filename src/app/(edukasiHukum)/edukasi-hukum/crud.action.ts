@@ -60,8 +60,8 @@ export const makePost = async (prevState: unknown, formData: FormData) => {
   } catch (error) {
     console.error("Error inserting post:", error);
   }
-  revalidatePath("/");
-  redirect("/");
+  revalidatePath("/edukasi-hukum");
+  redirect("/edukasi-hukum");
 };
 
 export const getAllPost = async () => {
@@ -135,7 +135,11 @@ export const updateNewsPost = async (
 export const deleteNewsPost = async (id: string) => {
   const data = await getPostById(id);
   if (!data) return { message: "No data found" };
-  await del(data.gambar);
+  try {
+    await del(data.gambar);
+  } catch (error) {
+    throw new Error("Error deleting image from Vercel Blob");
+  }
   try {
     await db.delete(post).where(eq(post.id, id));
   } catch (error) {
